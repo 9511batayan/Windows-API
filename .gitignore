@@ -217,4 +217,6 @@ pip-log.txt
 
 .exe
 .sln
+.vcxproj
+.vcxproj.filters
 .filters
