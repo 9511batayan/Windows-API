@@ -4,10 +4,10 @@
 #define WINDOW_WIDTH		(310)
 #define WINDOW_HEIGHT		(600)
 
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-// ‘åˆæ•Ï”
+// å¤§åŸŸå¤‰æ•°
 static TCHAR szWindowClass[] = _T("Win32AP_kadai1");
 static TCHAR szTitle[] = _T("Win32AP_kadai1");
 HINSTANCE	hInst;
@@ -20,14 +20,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	WNDCLASSEX wcex;
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ìî•ñ‚ðÝ’è
-	wcex.cbSize = sizeof(WNDCLASSEX);				// \‘¢‘ÌƒTƒCƒY
-	wcex.style = CS_HREDRAW | CS_VREDRAW;		// ƒXƒ^ƒCƒ‹
-	wcex.lpfnWndProc = WndProc;							// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
-	wcex.cbClsExtra = 0;									// Šg’£î•ñ‚P
-	wcex.cbWndExtra = 0;									// Šg’£î•ñ‚Q
-	wcex.hInstance = hInstance;							// ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
-	wcex.hIcon = (HICON)LoadImage(					// ƒAƒCƒRƒ“
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®æƒ…å ±ã‚’è¨­å®š
+	wcex.cbSize = sizeof(WNDCLASSEX);				// æ§‹é€ ä½“ã‚µã‚¤ã‚º
+	wcex.style = CS_HREDRAW | CS_VREDRAW;		// ã‚¹ã‚¿ã‚¤ãƒ«
+	wcex.lpfnWndProc = WndProc;							// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
+	wcex.cbClsExtra = 0;									// æ‹¡å¼µæƒ…å ±ï¼‘
+	wcex.cbWndExtra = 0;									// æ‹¡å¼µæƒ…å ±ï¼’
+	wcex.hInstance = hInstance;							// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+	wcex.hIcon = (HICON)LoadImage(					// ã‚¢ã‚¤ã‚³ãƒ³
 		NULL,
 		MAKEINTRESOURCE(IDI_APPLICATION),
 		IMAGE_ICON,
@@ -35,54 +35,53 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		0,
 		LR_DEFAULTSIZE | LR_SHARED
 		);
-	wcex.hIconSm = wcex.hIcon;							// ŽqƒAƒCƒRƒ“
+	wcex.hIconSm = wcex.hIcon;							// å­ã‚¢ã‚¤ã‚³ãƒ³
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;						// ƒƒjƒ…[–¼
+	wcex.lpszMenuName = NULL;						// ãƒ¡ãƒ‹ãƒ¥ãƒ¼å
 	wcex.lpszClassName = szWindowClass;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ð“o˜^‚·‚é
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²ã™ã‚‹
 	if (!RegisterClassEx(&wcex)) {
 		MessageBox(NULL,
-			_T("ƒEƒBƒ“ƒhƒE‚Ì“o˜^‚ÉŽ¸”s‚µ‚Ü‚µ‚½"),
-			_T("ƒEƒBƒ“ƒhƒE‚Ì“o˜^ƒGƒ‰["),
+			_T("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç™»éŒ²ã«å¤±æ•—ã—ã¾ã—ãŸ"),
+			_T("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç™»éŒ²ã‚¨ãƒ©ãƒ¼"),
 			NULL);
 		return 1;
 	}
 
-	hInst = hInstance; // ƒCƒ“ƒXƒ^ƒ“ƒX¥ƒnƒ“ƒhƒ‹‚ð‘åˆæ•Ï”‚ÉŠi”[
+	hInst = hInstance; // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ï½¥ãƒãƒ³ãƒ‰ãƒ«ã‚’å¤§åŸŸå¤‰æ•°ã«æ ¼ç´
 
 	g_windowPos.left = (GetSystemMetrics(SM_CXSCREEN) - WINDOW_WIDTH) / 2;
 	g_windowPos.top = (GetSystemMetrics(SM_CYSCREEN) - WINDOW_HEIGHT) / 2;
 	g_windowPos.right = g_windowPos.left + WINDOW_WIDTH;
 	g_windowPos.bottom = g_windowPos.top + WINDOW_HEIGHT;
 
-	// ƒEƒBƒ“ƒhƒE‚ðì¬‚·‚é
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã™ã‚‹
 	HWND hWnd = CreateWindow(
-		szWindowClass,					// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
-		szTitle,							// ƒ^ƒCƒgƒ‹ƒo[‚É•\Ž¦‚·‚é•¶Žš—ñ
-		WS_OVERLAPPEDWINDOW,		// ƒEƒBƒ“ƒhƒE‚ÌŽí—Þ
-		g_windowPos.left,					// ƒEƒBƒ“ƒhƒE‚ð•\Ž¦‚·‚éˆÊ’u(XÀ•Wj
-		g_windowPos.top,					// ƒEƒBƒ“ƒhƒE‚ð•\Ž¦‚·‚éˆÊ’u(YÀ•Wj
-		WINDOW_WIDTH,				// ƒEƒBƒ“ƒhƒE‚Ì•
-		WINDOW_HEIGHT,				// ƒEƒBƒ“ƒhƒE‚Ì‚‚³
-		NULL,							// eƒEƒBƒ“ƒhƒE‚ÌƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-		NULL,							// ƒƒjƒ…[ƒnƒ“ƒhƒ‹
-		hInst,							// ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
-		NULL							// ‚»‚Ì‘¼‚Ìì¬ƒf[ƒ^
+		szWindowClass,					// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹å
+		szTitle,							// ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã«è¡¨ç¤ºã™ã‚‹æ–‡å­—åˆ—
+		WS_OVERLAPPEDWINDOW,		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç¨®é¡ž
+		g_windowPos.left,					// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã™ã‚‹ä½ç½®(Xåº§æ¨™ï¼‰
+		g_windowPos.top,					// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã™ã‚‹ä½ç½®(Yåº§æ¨™ï¼‰
+		WINDOW_WIDTH,				// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹…
+		WINDOW_HEIGHT,				// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•
+		NULL,							// è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+		NULL,							// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+		hInst,							// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+		NULL							// ãã®ä»–ã®ä½œæˆãƒ‡ãƒ¼ã‚¿
 		);
 
 	if (!hWnd) {
 		MessageBox(NULL,
-			_T("ƒEƒBƒ“ƒhƒE‚Ìì¬‚ÉŽ¸”s‚µ‚Ü‚µ‚½"),
-			_T("ƒEƒBƒ“ƒhƒE‚Ìì¬ƒGƒ‰["),
+			_T("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆã«å¤±æ•—ã—ã¾ã—ãŸ"),
+			_T("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆã‚¨ãƒ©ãƒ¼"),
 			NULL);
 		return 1;
 	}
 
-	// ƒEƒBƒ“ƒhƒE‚ð•\Ž¦‚·‚é
-	ShowWindow(hWnd, nCmdShow);
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã™ã‚‹	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
 	MSG msg;
@@ -93,7 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	return (int)msg.wParam;
 }
 
-// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	HDC hDC;
 	HBRUSH hBrush;
@@ -108,31 +107,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		break;
 
 	case WM_PAINT:
-		hDC = BeginPaint(hWnd, &ps);		// GDIŠÖ”‚É‚æ‚é•`‰æ‚ðŠJŽn‚·‚é
-		hBrush = (HBRUSH)GetStockObject(BLACK_BRUSH);	//•F‚ÌƒXƒgƒbƒNƒuƒ‰ƒV‚ðŽæ“¾
-		SelectObject(hDC, hBrush);			//Žæ“¾‚µ‚½ƒuƒ‰ƒV‚ðŽg—p
-		RoundRect(hDC, 10, 10, 280, 548, 60,60);	//iphoneŠO‘¤
+		hDC = BeginPaint(hWnd, &ps);		// GDIé–¢æ•°ã«ã‚ˆã‚‹æç”»ã‚’é–‹å§‹ã™ã‚‹
+		hBrush = (HBRUSH)GetStockObject(BLACK_BRUSH);	//é»’è‰²ã®ã‚¹ãƒˆãƒƒã‚¯ãƒ–ãƒ©ã‚·ã‚’å–å¾—
+		SelectObject(hDC, hBrush);			//å–å¾—ã—ãŸãƒ–ãƒ©ã‚·ã‚’ä½¿ç”¨
+		RoundRect(hDC, 10, 10, 280, 548, 60,60);	//iphoneå¤–å´
 
-		hBrush = (HBRUSH)GetStockObject(GRAY_BRUSH);	//ŠDF‚ÌƒXƒgƒbƒNƒuƒ‰ƒV‚ðŽæ“¾
-		SelectObject(hDC, hBrush);	//Žæ“¾‚µ‚½ƒuƒ‰ƒV‚ðŽg—p
-		Ellipse(hDC, 121, 490, 169, 538);	//ƒz[ƒ€ƒ{ƒ^ƒ“ŠOŽü
+		hBrush = (HBRUSH)GetStockObject(GRAY_BRUSH);	//ç°è‰²ã®ã‚¹ãƒˆãƒƒã‚¯ãƒ–ãƒ©ã‚·ã‚’å–å¾—
+		SelectObject(hDC, hBrush);	//å–å¾—ã—ãŸãƒ–ãƒ©ã‚·ã‚’ä½¿ç”¨
+		Ellipse(hDC, 121, 490, 169, 538);	//ãƒ›ãƒ¼ãƒ ãƒœã‚¿ãƒ³å¤–å‘¨
 
-		hBrush = (HBRUSH)GetStockObject(BLACK_BRUSH);	//•F‚ÌƒXƒgƒbƒNƒuƒ‰ƒV‚ðŽæ“¾
-		SelectObject(hDC, hBrush);	//Žæ“¾‚µ‚½ƒuƒ‰ƒV‚ðŽg—p
-		Ellipse(hDC, 125, 494, 165, 534);	//ƒz[ƒ€ƒ{ƒ^ƒ“
+		hBrush = (HBRUSH)GetStockObject(BLACK_BRUSH);	//é»’è‰²ã®ã‚¹ãƒˆãƒƒã‚¯ãƒ–ãƒ©ã‚·ã‚’å–å¾—
+		SelectObject(hDC, hBrush);	//å–å¾—ã—ãŸãƒ–ãƒ©ã‚·ã‚’ä½¿ç”¨
+		Ellipse(hDC, 125, 494, 165, 534);	//ãƒ›ãƒ¼ãƒ ãƒœã‚¿ãƒ³
 
-		hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);	//”’F‚ÌƒXƒgƒbƒNƒuƒ‰ƒV‚ðŽæ“¾
-		SelectObject(hDC, hBrush);	//Žæ“¾‚µ‚½ƒuƒ‰ƒV‚ðŽg—p
-		Ellipse(hDC, 141, 19, 149, 27);	//‹ßÚ&ŠÂ‹«ŒõƒZƒ“ƒT
-		Ellipse(hDC, 90, 32, 100, 42);	//‘O–Ê‘¤ƒJƒƒ‰
-		RoundRect(hDC, 117, 35, 177, 40, 8, 8);//‘O–Ê‘¤ƒ}ƒCƒN
+		hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);	//ç™½è‰²ã®ã‚¹ãƒˆãƒƒã‚¯ãƒ–ãƒ©ã‚·ã‚’å–å¾—
+		SelectObject(hDC, hBrush);	//å–å¾—ã—ãŸãƒ–ãƒ©ã‚·ã‚’ä½¿ç”¨
+		Ellipse(hDC, 141, 19, 149, 27);	//è¿‘æŽ¥&ç’°å¢ƒå…‰ã‚»ãƒ³ã‚µ
+		Ellipse(hDC, 90, 32, 100, 42);	//å‰é¢å´ã‚«ãƒ¡ãƒ©
+		RoundRect(hDC, 117, 35, 177, 40, 8, 8);//å‰é¢å´ãƒžã‚¤ã‚¯
 
-		hBrush = CreateSolidBrush(RGB(255, 255, 0));		// Â‚¢˜_—ƒuƒ‰ƒV‚ðì¬‚·‚é
-		SelectObject(hDC, hBrush);	// ì¬‚µ‚½˜_—ƒuƒ‰ƒV‚ðŽg—p‚·‚é
-		Rectangle(hDC, 20, 70, 270, 480);	//‰æ–Ê
-		DeleteObject(hBrush);	//ì¬‚µ‚½˜_—ƒuƒ‰ƒV‚ðíœ‚·‚é
+		hBrush = CreateSolidBrush(RGB(255, 255, 0));		// é’ã„è«–ç†ãƒ–ãƒ©ã‚·ã‚’ä½œæˆã™ã‚‹
+		SelectObject(hDC, hBrush);	// ä½œæˆã—ãŸè«–ç†ãƒ–ãƒ©ã‚·ã‚’ä½¿ç”¨ã™ã‚‹
+		Rectangle(hDC, 20, 70, 270, 480);	//ç”»é¢
+		DeleteObject(hBrush);	//ä½œæˆã—ãŸè«–ç†ãƒ–ãƒ©ã‚·ã‚’å‰Šé™¤ã™ã‚‹
 
-		EndPaint(hWnd, &ps);				// GDIŠÖ”‚É‚æ‚é•`‰æ‚ðI—¹‚·‚é
+		EndPaint(hWnd, &ps);				// GDIé–¢æ•°ã«ã‚ˆã‚‹æç”»ã‚’çµ‚äº†ã™ã‚‹
 		break;
 
 	case WM_DESTROY:
