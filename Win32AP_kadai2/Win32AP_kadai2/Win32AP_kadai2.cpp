@@ -111,12 +111,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	static LPCTSTR TEXT4 = _T("y");
 
 	double X, Y;	//座標
-	double x0 = 170;double y0 = 300;
 	double Cx = 135;	//原点x座標
 	double Cy = 269;	//原点y座標
 	double angle;	//角度
-	int r = 35;		//円の半径
-	int rd = 40;	//半径の加算地
+	int r = 30;		//円の半径
+	int rd = 35;	//半径の加算地
 	int a = 1;
 	int i=0;
 
@@ -127,7 +126,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		//logfont.lfWeight = 700;
 		wsprintf(logfont.lfFaceName, _T("Times New Roman"));
 		break;
-
 
 	case WM_MOVING:
 		((RECT*)lParam)->left = g_windowPos.left;
@@ -162,56 +160,49 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		DeleteObject(hBrush);	//作成した論理ブラシを削除する
 
 		logfont.lfHeight = 25;		//フォントサイズの指定
+
 		while (i < 3){				//同心円状を3回繰り返す
-			for (angle = 0; angle < 350; angle += 30){
-				double radian = angle*(PI / 180);	//角度をラジアンに変換
-				X = Cx + (cos(radian)*r); Y = Cy + (sin(radian)*r);
+			for (angle = -2; angle < 350; angle += 30){
+					double radian = angle*(PI / 180);	//角度をラジアンに変換
+					X = Cx + (cos(radian)*r); Y = Cy + (sin(radian)*r);
 
-				hFont = CreateFontIndirect(&logfont);
-				SelectObject(hDC, hFont);
+					hFont = CreateFontIndirect(&logfont);
+					SelectObject(hDC, hFont);
+				
+					SetBkMode(hDC, TRANSPARENT);	//背景色を設定
 
-				//**** 2点から角度を求める ****
-				double dx = x0 - X;
-				double dy = y0 - Y;
-				double radian1 = atan2(dx, dy);
-				radian1 = radian1*(180 / PI) * 10;
-
-				logfont.lfEscapement = radian1; //文字に傾きを付ける
-
-				SetBkMode(hDC, TRANSPARENT);	//背景色を設定
-				while (a < 9){
-					switch (a){
-					case 1:
-					case 4:
-					case 6:
-						TextOut(hDC, X, Y, TEXT, _tcslen(TEXT));
-						break;
-					case 2:
-					case 5:
-						TextOut(hDC, X, Y, TEXT1, _tcslen(TEXT1));
-						break;
-					case 3:
-						TextOut(hDC, X, Y, TEXT2, _tcslen(TEXT2));
-						break;
-					case 7:
-						TextOut(hDC, X, Y, TEXT3, _tcslen(TEXT3));
-						break;
-					case 8:
-						TextOut(hDC, X, Y, TEXT4, _tcslen(TEXT4));
-						a = 0;
-						break;
+					while (a < 9){
+							switch (a){
+							case 1:
+							case 4:
+							case 6:
+								TextOut(hDC, X, Y, TEXT, _tcslen(TEXT));
+								break;
+							case 2:
+							case 5:
+								TextOut(hDC, X, Y, TEXT1, _tcslen(TEXT1));
+								break;
+							case 3:
+								TextOut(hDC, X, Y, TEXT2, _tcslen(TEXT2));
+								break;
+							case 7:
+								TextOut(hDC, X, Y, TEXT3, _tcslen(TEXT3));
+								break;
+							case 8:
+								TextOut(hDC, X, Y, TEXT4, _tcslen(TEXT4));
+								a = 0;
+								break;
+							}
+							a++;
+							break;
 					}
-					a++;
-					break;
-				}
+					DeleteObject(hFont); 	// 作成した論理フォントを削除する
 			}
 			r += rd;		//半径を大きくさせる
 			logfont.lfHeight += 10;		//フォントサイズが10ずつ大きくなる
 			i++;
 		}
 
-
-		ReleaseDC(hWnd, hDC);
 		EndPaint(hWnd, &ps);	// GDI関数による描画を終了する
 		break;
 
