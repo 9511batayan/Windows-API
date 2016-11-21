@@ -5,8 +5,8 @@
 #define	ID_MYCHILD	(100)
 #define W_WIDTH (700)	//ウィンドウサイズ幅
 #define W_HEIGHT (400)	//ウィンドウサイズ高さ
-#define	CHD_WIDTH	(100)	//画像横ピクセル	
-#define	CHD_HEIGHT	(57)	//画像縦ピクセル
+#define	CHD_WIDTH	(100)
+#define	CHD_HEIGHT	(57)
 
 // プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -17,13 +17,12 @@ BOOL InitInstance(HINSTANCE, int, LPCTSTR);
 
 static TCHAR szClassName[] = _T("Win32AP_kadai3");
 static TCHAR szchClassName[] = _T("child");
-static TCHAR szTitle[] = _T("Discovery_reflect");
+static TCHAR szTitle[] = _T("icehockey_reflect");
 
 int img_start_x = 83;		//スタート地点のx座標
 int img_start_y = 29;		//スタート地点のy座標
 int img_end_x = 482;		//右端地点のx座標
 int img_end_y = 245; //下地点でのy座標
-int count = 1;
 
 int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, int nCmdShow) {
 	MSG msg;
@@ -126,8 +125,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		DeleteObject(hBrush); //作成した論理ブラシを削除する
 
 		EndPaint(hWnd, &ps); 	// GDI関数による描画を終了する
-		break;
+	}
 
+	switch (message) {
 	case WM_CREATE:
 		hInst = ((LPCREATESTRUCT)lParam)->hInstance;
 		InitApp(hInst, ChdProc1, szchClassName);
@@ -158,15 +158,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		x += dx;
 		y += dy;
 
-		if (x < img_start_x){
-			count +=1;
-			dx *= -1;
-		}
-		if (x > img_end_x)	{
-			count +=1;
-			dx *= -1;
-		}
-
+		if (x < img_start_x) dx *= -1;
+		if (x > img_end_x)	dx *= -1;
 		if (y < img_start_y)	dy *= -1;
 		if (y> img_end_y)	dy *= -1;
 
@@ -187,37 +180,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 LRESULT CALLBACK ChdProc1(HWND hChdWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	static HBITMAP	hBitmap1;
-	static HBITMAP	hBitmap2;
 	static HBITMAP	hPrevBitmap;
 	HINSTANCE		hInst;
 	PAINTSTRUCT	ps;
 	HDC			hDC;
 	HDC			hCompatDC;
 
-
 	switch (message) {
 	case WM_PAINT:
 		hInst = (HINSTANCE)GetWindowLong(hChdWnd, GWL_HINSTANCE);
 		hDC = BeginPaint(hChdWnd, &ps);
-
 		hBitmap1 = (HBITMAP)LoadImage(
 			hInst,
-			_T("Discovery.bmp"),
+			_T("icehockey.bmp"),
 			IMAGE_BITMAP,
 			0,
 			0,
 			LR_LOADFROMFILE);
 
-		hBitmap2 = (HBITMAP)LoadImage(
-			hInst,
-			_T("Discovery1.bmp"),
-			IMAGE_BITMAP,
-			0,
-			0,
-			LR_LOADFROMFILE);
-
-
-		if (hBitmap1 == NULL || hBitmap2 == NULL) {
+		if (hBitmap1 == NULL) {
 			MessageBox(
 				hChdWnd,
 				_T("ビットマップのロードに失敗しました"),
@@ -227,20 +208,14 @@ LRESULT CALLBACK ChdProc1(HWND hChdWnd, UINT message, WPARAM wParam, LPARAM lPar
 			return 0;
 		}
 
-		hCompatDC = CreateCompatibleDC(hDC);
 
-		if (count % 2 == 1){
-			SelectObject(hCompatDC, hBitmap1);
-		}
-		else if (count % 2 == 0){
-			SelectObject(hCompatDC, hBitmap2);
-		}
+		hCompatDC = CreateCompatibleDC(hDC);
+		SelectObject(hCompatDC, hBitmap1);
 
 		BitBlt(hDC, 0, 0, CHD_WIDTH, CHD_HEIGHT, hCompatDC, 0, 0, SRCCOPY);
 
 		DeleteDC(hCompatDC);
 		DeleteObject(hBitmap1);
-		DeleteObject(hBitmap2);
 		EndPaint(hChdWnd, &ps);
 		break;
 
