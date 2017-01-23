@@ -1,3 +1,4 @@
 # Windows-API
-Windows32bit APIのソースコード
-3年後期授業特別プログラミング課題用リポジトリ
+##Windows32bit APIのソースコード
+Windows API（ウィンドウズ エーピーアイ）とは、Microsoft WindowsのAPIのことである.Windows上で動作するアプリケーションを作成できる様々なプログラミング言語・開発環境においてWindows APIを使用する手段が提供されている.
+このリポジトリは3年後期授業特別プログラミング課題用リポジトリ兼プライベート用である.
